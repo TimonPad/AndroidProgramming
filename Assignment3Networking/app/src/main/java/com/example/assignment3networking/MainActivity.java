@@ -60,19 +60,15 @@ public class MainActivity extends AppCompatActivity implements OwnAdapter.OnNote
                     public void onClick(DialogInterface dialog, int position) { switch (position) {
                         case 0:
                             Toast.makeText(MainActivity.this, "Faces", Toast.LENGTH_SHORT).show();
-                            addPictureMap();
-                            ownAdapter.notifyDataSetChanged();
-
+                            addPictureMap("face");
                             break;
                         case 1:
                             Toast.makeText(MainActivity.this, "Furniture", Toast.LENGTH_SHORT).show();
-                            //listA.add("Image number " + (1+ listA.size()));
-                            ownAdapter.notifyDataSetChanged();
+                            addPictureMap("furniture");
                             break;
                         case 2:
                             Toast.makeText(MainActivity.this, "Pizza", Toast.LENGTH_SHORT).show();
-                            //listA.add("Image number " + (1+ listA.size()));
-                            ownAdapter.notifyDataSetChanged();
+                            addPictureMap("pizza");
                             break;
                     }
                     }
@@ -81,13 +77,14 @@ public class MainActivity extends AppCompatActivity implements OwnAdapter.OnNote
         alertDialog.show();
     }
 
-    public void addPictureMap(){
+    public void addPictureMap(String s){
         MySingleton.getInstance()
                 .getLoremSpaceRepository()
-                .GetPicture("https://api.lorem.space/image/album?w=70&h=70", new LoremSpaceRepository.IPicture() {
+                .GetPicture(("https://api.lorem.space/image/"+ s + "?w=70&h=70"), new LoremSpaceRepository.IPicture() {
                     @Override
                     public void Callback(Bitmap bitmap) {
                         bmp_images.add(bitmap);
+                        ownAdapter.notifyDataSetChanged();
                     }
                 });
     }
